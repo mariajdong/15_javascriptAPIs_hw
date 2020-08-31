@@ -1,7 +1,10 @@
+// define file path for json file
 var url = `../../data/samples.json`;
 
-// fxn to display bar graph
+// fxn to display bar graph & bubble chart
 function build_chart (sample) {
+
+    // pull data for selected sample
     d3.json (url).then ((data) => {
         for (var x = 0; x < data.samples.length; x++) {
             if (data.samples[x].id == sample) {
@@ -9,10 +12,17 @@ function build_chart (sample) {
             }
         };
 
-        var x_values = sample_data.sample_values.slice (0, 10).reverse();
-        var y_values = sample_data.otu_ids.slice (0, 10).reverse().map (object => `OTU ${object}`);
-        var hover_text = sample_data.otu_labels.slice (0, 10).reverse();
+        // pull arrays from sample data
+        var sample_values = sample_data.sample_values;
+        var otu_ids = sample_data.otu_ids;
+        var otu_labels = sample_data.otu_labels;
 
+        // slice arrays for bar graph
+        var x_values = sample_values.slice (0, 10).reverse();
+        var y_values = otu_ids.slice (0, 10).reverse().map (object => `OTU ${object}`);
+        var hover_text = otu_labels.slice (0, 10).reverse();
+
+        // create trace/data for bar graph
         var bar_data = [{
             x: x_values,
             y: y_values,
@@ -22,6 +32,20 @@ function build_chart (sample) {
         }];
 
         Plotly.newPlot ('bar', bar_data);
+
+        // create trace/data for bubble chart
+        var bubble_data = [{
+            x: otu_ids,
+            y: sample_values,
+            text: otu_labels,
+            mode: 'markers',
+            marker: {
+                size: sample_values,
+                color: otu_ids
+            }
+        }];
+
+        Plotly.newPlot ('bubble', bubble_data);
     });
 }
 
