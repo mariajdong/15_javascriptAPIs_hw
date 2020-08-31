@@ -2,7 +2,7 @@
 var url = `../../data/samples.json`;
 
 // fxn to display bar graph & bubble chart
-function build_chart (sample) {
+function build_charts (sample) {
 
     // pull data for selected sample
     d3.json (url).then ((data) => {
@@ -31,7 +31,11 @@ function build_chart (sample) {
             orientation: 'h'
         }];
 
-        Plotly.newPlot ('bar', bar_data);
+        var bar_layout = {
+            title: `Sample ${sample}: Top 10 OTUs`
+        }
+
+        Plotly.newPlot ('bar', bar_data, bar_layout);
 
         // create trace/data for bubble chart
         var bubble_data = [{
@@ -45,7 +49,12 @@ function build_chart (sample) {
             }
         }];
 
-        Plotly.newPlot ('bubble', bubble_data);
+        var bubble_layout = {
+            title: `All Bacteria & Corresponding Frequency`,
+            xaxis: { title: 'OTU ID' },
+            yaxis: { title: 'Frequency' }
+        }
+        Plotly.newPlot ('bubble', bubble_data, bubble_layout);
     });
 }
 
@@ -70,5 +79,27 @@ function build_metadata (sample) {
     });
 }
 
-build_chart('1601');
-build_metadata('1601');
+// fxn to initialize page
+function init () {
+
+    // select dropdown element, populate ID info in menu
+    var dropdown = d3.select('#selDataset');
+    d3.json (url).then ((data) => {
+        data.names.forEach ((name) => {
+            dropdown.append ('option').text (name).property ('value');
+        });
+    });
+
+    // fxns to pull corresponding data
+    build_charts ('940');
+    build_metadata ('940');
+}
+
+// fxn to populate new data
+function optionChanged (id) {
+    build_charts (id);
+    build_metadata (id);
+}
+
+// call init fxn
+init ();
