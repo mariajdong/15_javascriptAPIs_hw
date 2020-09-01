@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bellybutton Biodiversity</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>Belly Button Biodiversity</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/flatly/bootstrap.min.css">
 </head>
 
 <body>
@@ -24,17 +24,17 @@
           <h5>Test Subject ID No.:</h5>
           <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Demographic Info</h3>
-          </div>
-          <div id="sample-metadata" class="panel-body"></div>
-        </div>
+        <table class="table table-hover table-bordered">
+          <thead class="thead-light">
+            <tr><th>Demographic Info</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         <div id="bar"></div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-4">
         <div id="gauge"></div>
       </div>
     </div>
@@ -48,7 +48,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="./static/js/app.js"></script>
-  <script src="./static/js/bonus.js"></script>
+  <!-- <script src="./static/js/bonus.js"></script> -->
   <!-- <script src="samples.json"></script> -->
   
 </body>

@@ -22,7 +22,7 @@ function build_charts (sample) {
         var y_values = otu_ids.slice (0, 10).reverse().map (object => `OTU ${object}`);
         var hover_text = otu_labels.slice (0, 10).reverse();
 
-        // create trace/data for bar graph
+        // create trace/data & layout for bar graph
         var bar_data = [{
             x: x_values,
             y: y_values,
@@ -32,12 +32,12 @@ function build_charts (sample) {
         }];
 
         var bar_layout = {
-            title: `Sample ${sample}: Top 10 OTUs`
+            title: `Top 10 OTUs in Sample ${sample}`
         }
 
         Plotly.newPlot ('bar', bar_data, bar_layout);
 
-        // create trace/data for bubble chart
+        // create trace/data & layout for bubble chart
         var bubble_data = [{
             x: otu_ids,
             y: sample_values,
@@ -50,11 +50,13 @@ function build_charts (sample) {
         }];
 
         var bubble_layout = {
-            title: `All Bacteria & Corresponding Frequency`,
+            title: `All Bacteria in Sample ${sample} & Corresponding Frequency`,
             xaxis: { title: 'OTU ID' },
             yaxis: { title: 'Frequency' }
         }
         Plotly.newPlot ('bubble', bubble_data, bubble_layout);
+
+        // create gauge chart
     });
 }
 
@@ -69,21 +71,24 @@ function build_metadata (sample) {
             }
         };
 
-        var metadata_box = d3.select ('#sample-metadata');
-        metadata_box.html ("");
+        var metadata_box = d3.select ('tbody');
+        var tb = document.querySelector('tbody');
+        while (tb.childNodes.length) {
+            tb.removeChild(tb.childNodes[0]);
+        }
 
         Object.entries (sample_data).forEach (([key, value]) => {
-            var row = metadata_box.append ('p');
+            var row = metadata_box.append ('tr');
             row.text (`${key}: ${value}`)
         });
     });
 }
 
 // fxn to initialize page
-function init () {
+function init() {
 
     // select dropdown element, populate ID info in menu
-    var dropdown = d3.select('#selDataset');
+    var dropdown = d3.select ('#selDataset');
     d3.json (url).then ((data) => {
         data.names.forEach ((name) => {
             dropdown.append ('option').text (name).property ('value');
@@ -102,4 +107,4 @@ function optionChanged (id) {
 }
 
 // call init fxn
-init ();
+init();
