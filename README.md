@@ -1,2 +1,2 @@
 # 15_javascriptAPIs_hw
-javascript APIs hw due 9/3/2020
+please access the deployed webpage [here](https://mariajdong.github.io/15_javascriptAPIs_hw/).
