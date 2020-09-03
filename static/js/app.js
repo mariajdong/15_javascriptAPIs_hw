@@ -1,5 +1,5 @@
 // define file path for json file
-var url = `../../data/samples.json`;
+var url = `../data/samples.json`;
 
 // fxn to display bar graph & bubble chart
 function build_charts (sample) {
